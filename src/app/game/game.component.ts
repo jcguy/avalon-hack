@@ -26,6 +26,7 @@ export class GameComponent implements OnInit {
   players;
   selectedPlayer = null;
   lastGameRef;
+
   constructor(
     private db: AngularFireDatabase,
     private avatarService: AvatarService
@@ -60,6 +61,7 @@ export class GameComponent implements OnInit {
       let myNightInfo = game['nightInfo'][this.selectedPlayer];
   
       this.role = this.roleDescriptions[myNightInfo.role];
+      this.roleCode = myNightInfo.role;
       this.firstToPropose = myNightInfo.firstToPropose;
       this.firstToProposePlayer = myNightInfo.firstToProposePlayer;
       this.showRoles = game.showRoles;
@@ -165,10 +167,21 @@ export class GameComponent implements OnInit {
          merlin: "Merlin",
          percival: "Percival",
          spy: "Regular Spy",
-         assasin: "Assasin",
+         assassin: "assassin",
          morgana: "Morgana",
          mordred: "Mordred",
          worst: "Worst Blue",
+  }
+
+  roleInstructions = {
+    blue: "Follow Percival and try to figure out who the spies are.",
+    merlin: "You see the spies, but not Mordred. Percival sees you and Morgana. Try to signal Percival, but stay hidden from the spies.",
+    percival: "You see Merlin and Morgana. Try to figure out which is which, and figure out from Merlin who the other spies are.",
+    spy: "You see all the other spies. Merlin sees you. Try to get on missions and fail them, but don't be too obvious.",
+    assassin: "You see all the other spies. Merlin sees you. Try to get on missions and fail them, but don't be too obvious. Keep an eye out for a Blue who knows too much, because you get to try to kill Merlin.",
+    morgana: "You see all the other spies. Percival sees you and Merlin, and Merlin sees you",
+    mordred: "You see all the other spies. No blue players know who you are, so hide until you can do the most damage.",
+    worst: "You don't know anything, but you're trying to help the spies win. Confuse the blue players as much as possible."
   }
 
   startGame() {
@@ -186,7 +199,7 @@ export class GameComponent implements OnInit {
          },
          merlin: {
            spy: true,
-           assasin: true,
+           assassin: true,
            morgana: true,
          },
          percival: {
@@ -195,23 +208,23 @@ export class GameComponent implements OnInit {
          },
          spy: {
            spy: true,
-           assasin: true,
+           assassin: true,
            morgana: true,
            mordred: true,
          },
-         assasin: {
+         assassin: {
            spy: true,
            morgana: true,
            mordred: true,
          },
          morgana: {
            spy: true,
-           assasin: true,
+           assassin: true,
            mordred: true,
          },
          mordred: {
            spy: true,
-           assasin: true,
+           assassin: true,
            morgana: true,
          },
        };
@@ -299,23 +312,23 @@ export class GameComponent implements OnInit {
               break;
           }
           case 7: { 
-              xxx(['assasin','morgana','mordred','merlin','percival','blue','blue']);
+              xxx(['assassin','morgana','mordred','merlin','percival','blue','blue']);
               break; 
           }
           case 8: { 
-              xxx(['assasin','morgana','mordred','merlin','percival','blue','blue','blue']);
+              xxx(['assassin','morgana','mordred','merlin','percival','blue','blue','blue']);
               break; 
           }
           case 9: { 
-              xxx(['assasin','morgana','mordred','merlin','percival','blue','blue','blue','worst']);
+              xxx(['assassin','morgana','mordred','merlin','percival','blue','blue','blue','worst']);
               break; 
           }
           case 10: { 
-              xxx(['assasin','morgana','mordred','merlin','percival','blue','blue','blue','blue','spy']);
+              xxx(['assassin','morgana','mordred','merlin','percival','blue','blue','blue','blue','spy']);
               break; 
           } 
           case 11: { 
-              xxx(['assasin','morgana','mordred','merlin','percival','blue','blue','blue','blue','spy','blue']);
+              xxx(['assassin','morgana','mordred','merlin','percival','blue','blue','blue','blue','spy','blue']);
               break; 
           } 
           default: { 
@@ -332,6 +345,7 @@ export class GameComponent implements OnInit {
   }
   
   role = null;
+  roleCode = null;
   firstToPropose = null;
   firstToProposePlayer = null;
   thumbs = null;

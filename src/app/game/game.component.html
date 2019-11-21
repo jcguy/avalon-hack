@@ -1,4 +1,4 @@
-<!-- <div *ngIf="isGarbageOs() && selectedPlayer && isNightPhaseX((game | async)) && !isNightPhase(gameSynced)">
+<!-- <div *ngIf="is*GarbageOs() && selectedPlayer && isNightPhaseX((game | async)) && !isNightPhase(gameSynced)">
   You are not part of the game in progress.
   <br>
   <ul>
@@ -57,6 +57,10 @@ game state: {{ (game | async)?.state }}
       </tr>
     </table>
     </div>
+  <div>
+    <p>
+      {{ roleInstructions[roleCode] }}
+    </p>
   </div>
   <div *ngIf="selectedPlayer && !isNightPhase(gameSynced)">
     You are not part of the game in progress.
